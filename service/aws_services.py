@@ -8,13 +8,13 @@ def aws_connect(service_name, region="us-east-1"):
         client = boto3.client(service_name, region_name=region)
         return client
     except Exception as e:
-        raise Exception("Could not connect to AWS resources")
+        raise Exception(f"Could not connect to AWS resources {e}")
 
 
 def send_message(aws_conn, queue_url, message):
     try:
         response = aws_conn.send_message(QueueUrl=queue_url, MessageBody=message)
-        if not "200" in str(response.get("ResponseMetadata").get("HTTPStatusCode")):
+        if "200" not in str(response.get("ResponseMetadata").get("HTTPStatusCode")):
             raise Exception("Error sending message")
 
         return True
@@ -41,7 +41,7 @@ def delete_message(aws_conn, queue_url, reciptHandler):
         response = aws_conn.delete_message(
             QueueUrl=queue_url, ReceiptHandle=reciptHandler
         )
-        return True
+        return response
     except Exception as e:
         raise e
 
