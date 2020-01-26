@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import json
 
+
 def parse_message(message):
     message_dict = {}
 
-    message = (message.replace("{", ""))
-    message = (message.replace("}", ""))
+    message = message.replace("{", "")
+    message = message.replace("}", "")
     splited_message = message.split("\n")
 
     try:
@@ -15,11 +16,11 @@ def parse_message(message):
 
             if tranformed_message[0]:
                 key = tranformed_message[0].replace('"', "")
-                value = tranformed_message[1].replace('"',"")
-                key_cleaned = key.replace("“","").replace("”","")
-                value_cleaned = value.replace("“","").replace("”","")
+                value = tranformed_message[1].replace('"', "")
+                key_cleaned = key.replace("“", "").replace("”", "")
+                value_cleaned = value.replace("“", "").replace("”", "")
                 if "," in value_cleaned[-1]:
-                    value_cleaned = value_cleaned.replace(",","")
+                    value_cleaned = value_cleaned.replace(",", "")
                 message_dict[key_cleaned] = value_cleaned
         return message_dict
     except Exception as e:
